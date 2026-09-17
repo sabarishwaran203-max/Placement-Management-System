@@ -1,0 +1,216 @@
+{
+  "info": {
+    "name": "Placement Management System API",
+    "description": "CRUD API collection for the Placement Management System (Django REST Framework backend).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:8000/api" },
+    { "key": "token", "value": "" },
+    { "key": "student_id", "value": "1" },
+    { "key": "company_id", "value": "1" },
+    { "key": "application_id", "value": "1" },
+    { "key": "placement_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Auth - Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {",
+              "  const data = pm.response.json();",
+              "  pm.collectionVariables.set('token', data.token);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@12345\"\n}" },
+        "url": { "raw": "{{base_url}}/auth/login/", "host": ["{{base_url}}"], "path": ["auth", "login", ""] }
+      }
+    },
+    {
+      "name": "Dashboard Stats",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Token {{token}}" }],
+        "url": { "raw": "{{base_url}}/dashboard/stats/", "host": ["{{base_url}}"], "path": ["dashboard", "stats", ""] }
+      }
+    },
+    {
+      "name": "Create Student",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Token {{token}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"register_number\": \"REG2026001\",\n  \"full_name\": \"Arjun Kumar\",\n  \"email\": \"arjun@example.com\",\n  \"phone_number\": \"9876543210\",\n  \"department\": \"CSE\",\n  \"year\": \"3\",\n  \"cgpa\": \"8.75\",\n  \"skills\": \"Python, React, SQL\",\n  \"graduation_year\": 2027,\n  \"placement_status\": \"NOT_PLACED\",\n  \"company_name\": \"\",\n  \"package\": \"0\"\n}" },
+        "url": { "raw": "{{base_url}}/students/", "host": ["{{base_url}}"], "path": ["students", ""] }
+      }
+    },
+    {
+      "name": "Get Students",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Token {{token}}" }],
+        "url": { "raw": "{{base_url}}/students/", "host": ["{{base_url}}"], "path": ["students", ""] }
+      }
+    },
+    {
+      "name": "Get Student",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Token {{token}}" }],
+        "url": { "raw": "{{base_url}}/students/{{student_id}}/", "host": ["{{base_url}}"], "path": ["students", "{{student_id}}", ""] }
+      }
+    },
+    {
+      "name": "Update Student",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Token {{token}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"cgpa\": \"9.10\"\n}" },
+        "url": { "raw": "{{base_url}}/students/{{student_id}}/", "host": ["{{base_url}}"], "path": ["students", "{{student_id}}", ""] }
+      }
+    },
+    {
+      "name": "Delete Student",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Token {{token}}" }],
+        "url": { "raw": "{{base_url}}/students/{{student_id}}/", "host": ["{{base_url}}"], "path": ["students", "{{student_id}}", ""] }
+      }
+    },
+    {
+      "name": "Create Company",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Token {{token}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"company_name\": \"Zoho Corporation\",\n  \"industry\": \"Product\",\n  \"location\": \"Chennai\",\n  \"job_role\": \"Software Developer\",\n  \"minimum_cgpa\": \"7.5\",\n  \"package\": \"700000\",\n  \"job_type\": \"FULL_TIME\",\n  \"drive_date\": \"2026-11-15\",\n  \"number_of_vacancies\": 15,\n  \"eligibility\": \"CSE, IT, ECE\",\n  \"description\": \"On-campus drive.\"\n}" },
+        "url": { "raw": "{{base_url}}/companies/", "host": ["{{base_url}}"], "path": ["companies", ""] }
+      }
+    },
+    {
+      "name": "Get Companies",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Token {{token}}" }],
+        "url": { "raw": "{{base_url}}/companies/", "host": ["{{base_url}}"], "path": ["companies", ""] }
+      }
+    },
+    {
+      "name": "Update Company",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Token {{token}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"package\": \"750000\"\n}" },
+        "url": { "raw": "{{base_url}}/companies/{{company_id}}/", "host": ["{{base_url}}"], "path": ["companies", "{{company_id}}", ""] }
+      }
+    },
+    {
+      "name": "Delete Company",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Token {{token}}" }],
+        "url": { "raw": "{{base_url}}/companies/{{company_id}}/", "host": ["{{base_url}}"], "path": ["companies", "{{company_id}}", ""] }
+      }
+    },
+    {
+      "name": "Create Application",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Token {{token}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"student\": {{student_id}},\n  \"company\": {{company_id}},\n  \"application_date\": \"2026-09-01\",\n  \"job_role\": \"Software Developer\",\n  \"application_status\": \"APPLIED\"\n}" },
+        "url": { "raw": "{{base_url}}/applications/", "host": ["{{base_url}}"], "path": ["applications", ""] }
+      }
+    },
+    {
+      "name": "Get Applications",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Token {{token}}" }],
+        "url": { "raw": "{{base_url}}/applications/", "host": ["{{base_url}}"], "path": ["applications", ""] }
+      }
+    },
+    {
+      "name": "Update Application",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Token {{token}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"application_status\": \"SHORTLISTED\"\n}" },
+        "url": { "raw": "{{base_url}}/applications/{{application_id}}/", "host": ["{{base_url}}"], "path": ["applications", "{{application_id}}", ""] }
+      }
+    },
+    {
+      "name": "Delete Application",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Token {{token}}" }],
+        "url": { "raw": "{{base_url}}/applications/{{application_id}}/", "host": ["{{base_url}}"], "path": ["applications", "{{application_id}}", ""] }
+      }
+    },
+    {
+      "name": "Create Placement",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Token {{token}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"student\": {{student_id}},\n  \"company\": {{company_id}},\n  \"job_role\": \"Software Developer\",\n  \"package\": \"700000\",\n  \"placement_date\": \"2026-12-01\",\n  \"placement_type\": \"FULL_TIME\",\n  \"status\": \"CONFIRMED\"\n}" },
+        "url": { "raw": "{{base_url}}/placements/", "host": ["{{base_url}}"], "path": ["placements", ""] }
+      }
+    },
+    {
+      "name": "Get Placements",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Token {{token}}" }],
+        "url": { "raw": "{{base_url}}/placements/", "host": ["{{base_url}}"], "path": ["placements", ""] }
+      }
+    },
+    {
+      "name": "Update Placement",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Token {{token}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"status\": \"PENDING\"\n}" },
+        "url": { "raw": "{{base_url}}/placements/{{placement_id}}/", "host": ["{{base_url}}"], "path": ["placements", "{{placement_id}}", ""] }
+      }
+    },
+    {
+      "name": "Delete Placement",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Token {{token}}" }],
+        "url": { "raw": "{{base_url}}/placements/{{placement_id}}/", "host": ["{{base_url}}"], "path": ["placements", "{{placement_id}}", ""] }
+      }
+    }
+  ]
+}
